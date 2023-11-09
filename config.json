@@ -1,0 +1,12 @@
+{
+    "angles":
+    {
+        "C5C4C3": "kąt pomiędzy nimi",
+        "C4C3C2": "itd"
+    },
+    "distances":
+    {
+        "C5C4": "dystans pomiedzy nimi",
+        "C4C3": "itd"
+    }
+}
