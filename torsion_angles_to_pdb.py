@@ -1,0 +1,1 @@
+#tutaj konwersja z kątów do pdb
