@@ -6,8 +6,8 @@ from calculate_angles import *
 
 def getPDBFile():
     isFileCorrect = True
-    if "--input" in sys.argv and (sys.argv.index("--input")+1)<len(sys.argv):
-        pdbFilepath = sys.argv[sys.argv.index("--input")+1]
+    if "--pdb" in sys.argv and (sys.argv.index("--pdb")+1)<len(sys.argv):
+        pdbFilepath = sys.argv[sys.argv.index("--pdb")+1]
         try:
             parser = PDBParser()
             PDBFile = parser.get_structure("Struct", pdbFilepath)
@@ -17,6 +17,7 @@ def getPDBFile():
     else:
         print("Error! Please provide a file to run the algorithm.")
         isFileCorrect = False
+        PDBFile = ""
 
     return isFileCorrect, PDBFile
 
