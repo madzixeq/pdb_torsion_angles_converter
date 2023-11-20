@@ -69,6 +69,10 @@ def getForthPoint(distance_CD, angle_BCD, torsion_angle, A, B, C):
             print(np.rad2deg(np.arccos(np.dot(np.cross(u1,u2),np.cross(u2,u3))/(vectorLength(np.cross(u1,u2))*vectorLength(np.cross(u2,u3))))))
         else:
             print(-np.rad2deg(np.arccos(np.dot(np.cross(u1,u2),np.cross(u2,u3))/(vectorLength(np.cross(u1,u2))*vectorLength(np.cross(u2,u3))))))
+        print("distance", distance_CD)
+        print(vectorLength(u3))
+        print("angle", angle_BCD)
+        print(np.rad2deg(np.arccos(np.dot(u2,u3)/(vectorLength(u2)*vectorLength(u3)))))
         return coords_D
     # print('wrong')
     return coords_C + [1,1,1]
