@@ -14,6 +14,7 @@ def getPDBFile():
         except FileNotFoundError:
             print("Error! Wrong filepath.")
             isFileCorrect = False  
+            PDBFile = ""
     else:
         print("Error! Please provide a file to run the algorithm.")
         isFileCorrect = False
