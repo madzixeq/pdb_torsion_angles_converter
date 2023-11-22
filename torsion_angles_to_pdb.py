@@ -30,52 +30,41 @@ def getTorsionAngles():
 def getForthPoint(distance_CD, angle_BCD, torsion_angle, A, B, C):
     #Równanie zostało wyznaczone na kartce i przepisane do funkcji
     #stąd specyficzne oznaczenia
-    diff=15
     coords_A = np.array(A.get_coord())
     coords_B = np.array(B.get_coord())
     coords_C = np.array(C.get_coord())
     u1 = coords_B - coords_A
     u2 = coords_C - coords_B
     a = np.cross(u1, u2)
-    t = vectorLength(a)*vectorLength(u2)*math.sin(np.radians(angle_BCD))*distance_CD*math.cos(np.radians(torsion_angle))
-    b = a[1]*u2[2] - a[2]*u2[1]
-    c = a[2]*u2[0] - a[0]*u2[2]
-    d = a[0]*u2[1] - a[1]*u2[0]
-    s = vectorLength(u2)*distance_CD*math.cos(np.radians(angle_BCD))
-    e = c/b - u2[1]/u2[0]
-    f = u2[2]/u2[0] - d/b 
-    g = -s/u2[0] + t/b 
-    h = -((u2[1]/u2[0])*(f/e) + u2[2]*u2[0])
-    j = s/u2[0] - (u2[1]/u2[0])*(g/e)
-    l = h**2 + f**2/e**2 + 1
-    m = 2*h*j +(2*f*g)/(e**2)
-    n = j**2 + g**2/e**2 - distance_CD**2
-    # print(l,m,n)
-    delta = (m**2 - 4*l*n)
-    if delta >= 0:
-        u3z = (-m-math.sqrt(m**2 - 4*l*n))/(2*l)
-        u3 = [h*u3z+j, (f/e)*u3z + g/e, u3z]
-        u3 = np.array(u3)
-        torsion_angle_check = np.rad2deg(np.arccos(np.dot(np.cross(u1,u2),np.cross(u2,u3))/(vectorLength(np.cross(u1,u2))*vectorLength(np.cross(u2,u3)))))
-        if np.absolute(torsion_angle_check-torsion_angle)<=diff:
-            coords_D = coords_C + u3
-        else:
-            u3z = (-m+math.sqrt(m**2 - 4*l*n))/(2*l)
-            u3 = [h*u3z+j, (f/e)*u3z + g/e, u3z]
-            u3 = np.array(u3)
-            coords_D = coords_C + u3
-        print("torsion", torsion_angle)
-        if torsion_angle > 0:
-            print(np.rad2deg(np.arccos(np.dot(np.cross(u1,u2),np.cross(u2,u3))/(vectorLength(np.cross(u1,u2))*vectorLength(np.cross(u2,u3))))))
-        else:
-            print(-np.rad2deg(np.arccos(np.dot(np.cross(u1,u2),np.cross(u2,u3))/(vectorLength(np.cross(u1,u2))*vectorLength(np.cross(u2,u3))))))
-        print("distance", distance_CD)
-        print(vectorLength(u3))
-        print("angle", angle_BCD)
+    b = vectorLength(a)*vectorLength(u2)*distance_CD*math.sin(np.deg2rad(angle_BCD))
+    c1 = b*math.cos(np.deg2rad(torsion_angle))
+    d1 = a[1]*u2[2]-a[2]*u2[1]
+    e1 = a[2]*u2[0]-a[0]*u2[2]
+    f1 = a[0]*u2[1] - a[1]*u2[0]
+    c2 = b*vectorLength(u2)*math.sin(np.deg2rad(torsion_angle))
+    d2 = u2[2]**2*a[0] + u2[1]**2*a[0]-u2[0]*a[1]*u2[1]-u2[0]*a[2]*u2[2]
+    e2 = u2[0]**2*a[1] + u2[2]**2*a[1]-u2[1]*a[2]*u2[2]-u2[1]*a[0]*u2[0]
+    f2 = u2[0]**2*a[2] + u2[1]**2*a[2]-u2[2]*a[0]*u2[0]-u2[2]*a[1]*u2[1]
+    c3 = vectorLength(u2)*distance_CD*math.cos(np.deg2rad(angle_BCD))
+    d3 = -u2[0]
+    e3 = -u2[1]
+    f3 = -u2[2]
+    w = d1*e2*f3+e1*f2*d3+f1*d2*e3-f1*e2*d3-d1*f2*e3-e1*d2*f3
+    wx = c1*e2*f3+e1*f2*c3+f1*c2*e3-f1*e2*c3-c1*f2*e3-e1*c2*f3
+    wy = d1*c2*f3+c1*f2*d3+f1*d2*c3-f1*c2*d3-d1*f2*c3-c1*d2*f3
+    wz = d1*e2*c3+e1*c2*d3+c1*d2*e3-c1*e2*d3-d1*c2*e3-e1*d2*c3
+    if w!=0:
+        u3 = np.array([wx/w,wy/w,wz/w])
+        print(angle_BCD)
         print(np.rad2deg(np.arccos(np.dot(u2,u3)/(vectorLength(u2)*vectorLength(u3)))))
-        return coords_D
-    # print('wrong')
-    return coords_C + [1,1,1]
+        return coords_C + u3
+    else:
+        print('wrong')
+        return coords_C +[1,1,1]
+    
+#def getPointFromDistAnd2Angles()
+#def getPointFromAngleDistAndPlane()
+#def planeCoords()
 
 
 if __name__ == "__main__":
