@@ -218,7 +218,7 @@ if __name__ == "__main__":
 
     #PYTANIA
     #1. Co z HETATM które są zmodyfikowanymi zasadami? skąd długości wiązań?
-    #2. N1/N9 - skąd wziąć dodatkowe info o tych punktach? (tak samo C2', OP1, OP2)
+    #2. N1/N9 - skąd wziąć dodatkowe info o tych punktach? (tak samo C2', OP1, OP2 i reszta => jak wybrać jedno z dwóch rozwiązań?)
             
     
 
