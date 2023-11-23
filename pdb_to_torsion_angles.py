@@ -34,9 +34,10 @@ def getTorsionAngleMatrix(PDBFile, includeSugarAngles):
     for id, residue in enumerate(residuesWithoutHet):
         if id != 0:
             anglesFromResidue.append(alphaAngle(residuesWithoutHet[id-1],residue))
+            anglesFromResidue.append(betaAngle(residue))
         else:
             anglesFromResidue.append(None)
-        anglesFromResidue.append(betaAngle(residue))
+            anglesFromResidue.append(None)
         anglesFromResidue.append(gammaAngle(residue))
         anglesFromResidue.append(deltaAngle(residue))
         if id < (len(residuesWithoutHet) - 1):
