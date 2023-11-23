@@ -1,10 +1,8 @@
 import numpy as np
 import pandas as pd
-from scipy.spatial.transform import Rotation
 import math
 import json
 import csv
-from random import randint
 from Bio.PDB import *
 from pdb_to_torsion_angles import getPDBFile
 
@@ -64,7 +62,7 @@ def getForthPoint(distance_CD, angle_BCD, torsion_angle, A, B, C):
         u3 = np.array([wx/w,wy/w,wz/w])
         return coords_C + u3
     else:
-        print('wrong torsion')
+        print('wrong')
         return coords_C +[1,1,1]
     
 def getPointFromDistAnd2Angles(distance_CD, angle_ACD, angle_BCD, A, B, C, plus):
@@ -140,7 +138,7 @@ if __name__ == "__main__":
     for id, residue in enumerate(residues):
         if id!=0:
             residues[id]["C5'"].set_coord(getForthPoint(json["rybosine"]["distance"]["O5'C5'"], json["phosfor"]["angles"]["PO5'C5'"],torsionAngles[id][0],residues[id-1]["O3'"], residues[id]["P"], residues[id]["O5'"]))
-        residues[id]["C4'"].set_coord(getForthPoint(json["rybosine"]["distance"]["C5'C4'"], json["rybosine"]["angles"]["O5'C5'C4'"],torsionAngles[id][1],residues[id]["P"], residues[id]["O5'"], residues[id]["C5'"]))
+            residues[id]["C4'"].set_coord(getForthPoint(json["rybosine"]["distance"]["C5'C4'"], json["rybosine"]["angles"]["O5'C5'C4'"],torsionAngles[id][1],residues[id]["P"], residues[id]["O5'"], residues[id]["C5'"]))
         residues[id]["C3'"].set_coord(getForthPoint(json["rybosine"]["distance"]["C4'C3'"], json["rybosine"]["angles"]["C5'C4'C3'"],torsionAngles[id][2],residues[id]["O5'"], residues[id]["C5'"], residues[id]["C4'"]))
         residues[id]["O3'"].set_coord(getForthPoint(json["rybosine"]["distance"]["O3'C3'"], json["rybosine"]["angles"]["C4'C3'O3'"],torsionAngles[id][3],residues[id]["C5'"], residues[id]["C4'"], residues[id]["C3'"]))
         if id < (len(residues) - 1):
@@ -204,21 +202,6 @@ if __name__ == "__main__":
                 atom.set_coord(residues[tmp][atom.get_name()].get_coord())
             tmp+=1
 
-    # for id, residue in enumerate(newStructure.get_residues()):
-    #     if not id in originalIndexes:
-    #         for model in newStructure:
-    #             for chain in model:
-    #                 chain.detach_child(residue.id)
-    #                 break
-    #             break
-
     io=PDBIO()
     io.set_structure(newStructure)
-    io.save("1ehz_from_torsion.pdb")  
-
-    #PYTANIA
-    #1. Co z HETATM które są zmodyfikowanymi zasadami? skąd długości wiązań?
-    #2. N1/N9 - skąd wziąć dodatkowe info o tych punktach? (tak samo C2', OP1, OP2 i reszta => jak wybrać jedno z dwóch rozwiązań?)
-            
-    
-
+    io.save("1ajf_from_torsion.pdb")  
